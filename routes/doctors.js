@@ -1,30 +1,31 @@
 /* 
-   BASE ROUTE: '/api/users
+   BASE ROUTE: '/api/doctors
 */
+
 const { Router } = require("express");
 const { check } = require("express-validator");
 const {
-  createUser,
-  getUsers,
-  updateUser,
-  deleteUser,
-} = require("../controllers/users");
+  createDoctor,
+  getDoctors,
+  updateDoctor,
+  deleteDoctor,
+} = require("../controllers/doctors");
 const { validateFields } = require("../middlewares/field-validators");
 const { validateJWT } = require("../middlewares/jwt-validation");
 
 const router = Router();
 
 //routes
-router.get("/get", getUsers);
+router.get("/get", validateJWT, getDoctors);
 router.post(
   "/create",
   [
+    validateJWT,
     check("name", "Name is required").not().isEmpty(),
-    check("email", "Email is required").isEmail(),
-    check("password", "Password is required").not().isEmpty(),
+    check("hospital", "Valid hospital is required").isMongoId(),
     validateFields,
   ],
-  createUser
+  createDoctor
 );
 
 router.put(
@@ -36,9 +37,9 @@ router.put(
     check("password", "Password is required").not().isEmpty(),
     validateFields,
   ],
-  updateUser
+  updateDoctor
 );
 
-router.delete("/delete/:id", validateJWT, deleteUser);
+router.delete("/delete/:id", validateJWT, deleteDoctor);
 
 module.exports = router;

@@ -5,7 +5,15 @@ const { generateJWT } = require("../helpers/jwt");
 const User = require("../models/User");
 
 const getUsers = async (req = request, res = response) => {
-  return res.send(await User.find({}));
+  const offset = Number(req.query.offset) || 0;
+  const limit = Number(req.query.limit) || 5;
+
+  const [users, count] = await Promise.all([
+    User.find().skip(offset).limit(limit),
+    User.count(),
+  ]);
+
+  res.send({ users, count, offset, limit });
 };
 
 const createUser = async (req, res = response) => {
