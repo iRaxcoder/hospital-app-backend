@@ -21,6 +21,7 @@ app.use("/api/hospitals", require("./routes/hospitals"));
 app.use("/api/doctors", require("./routes/doctors"));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/todo", require("./routes/searches"));
+app.use("/api/uploads", require("./routes/uploads"));
 
 const PORT = process.env.PORT || 4300;
 app.listen(PORT, () => {
