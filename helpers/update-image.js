@@ -12,8 +12,10 @@ const updateImage = async (type, id, fileName) => {
       }
       const oldPath = `./uploads/doctors/${doctor.img}`;
       if (fs.existsSync(oldPath)) {
-        //delete img
-        fs.unlinkSync(oldPath);
+        //delete img}
+        fs.unlinkSync(oldPath, (err) => {
+          return err;
+        });
       }
 
       doctor.img = fileName;

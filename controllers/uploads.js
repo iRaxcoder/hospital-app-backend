@@ -53,14 +53,13 @@ const fileUpload = async (req = request, res = response) => {
         msg: "Error when saving image",
       });
     }
+  });
+  console.log(await updateImage(type, id, fileName));
 
-    if (updateImage(type, id, fileName)) {
-      return res.send({
-        ok: true,
-        msg: "File uploaded successfully",
-        fileName,
-      });
-    }
+  return res.send({
+    ok: true,
+    msg: "file uploaded successfully",
+    fileName,
   });
 };
 
